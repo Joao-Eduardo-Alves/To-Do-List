@@ -1,0 +1,20 @@
+# Pastas do Visual Studio
+.vs/
+bin/
+obj/
+
+# Configurações do usuário e arquivos temporários
+*.user
+*.suo
+*.tmp
+*.log
+*.ide
+
+# Pacotes do NuGet
+*.nupkg
+packages/
+
+# Outros arquivos gerados
+*.resharper
+*.dotCover
+*.sln.docstates
