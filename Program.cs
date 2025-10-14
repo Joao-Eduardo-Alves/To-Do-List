@@ -1,6 +1,6 @@
 ﻿public class Tarefa
 {
-    public int Id { get; set; }
+    public int NumeroTarefa { get; set; }
     public string Descricao { get; set; }
     public bool Concluida { get; private set; }
     public void MarcarConcluida()
@@ -26,7 +26,8 @@ class Program
             Console.WriteLine("1 - cadastrar tarefa:");
             Console.WriteLine("2 - listar tarefas:");
             Console.WriteLine("3 - marcar tarefa como concluída:");
-            Console.WriteLine("4 - sair:");
+            Console.WriteLine("4 - Remover tarefa:");
+            Console.WriteLine("5 - sair:");
             Console.WriteLine("Digite a opção desejada:");
 
             string opcao = Console.ReadLine();
@@ -46,6 +47,10 @@ class Program
                     break;
 
                 case "4":
+                    DeletarTarefa(tarefas);
+                    break;
+
+                case "5":
                     rodando = false;
                     break;
 
@@ -63,7 +68,7 @@ class Program
 
         Tarefa novaTarefa = new Tarefa
         {
-            Id = tarefas.Count + 1,
+            NumeroTarefa = tarefas.Count + 1,
             Descricao = descricao
         };
 
@@ -83,20 +88,20 @@ class Program
             Console.WriteLine("Nenhuma tarefa cadastrada.");
             return;
         }
-
         foreach (var tarefa in tarefas)
         {
-            Console.WriteLine($"ID: {tarefa.Id}, Descrição: {tarefa.Descricao}, Concluída: {tarefa.Concluida}");
+            string status = tarefa.Concluida ? "CONCLUÍDA" : "NÃO CONCLUÍDA";
+            Console.WriteLine($"{tarefa.NumeroTarefa}, Tarefa: {tarefa.Descricao} - {status}");
             Console.WriteLine("");
         }
     }
     static void MarcarListaConcluida(List<Tarefa> tarefas)
     {
-        Console.WriteLine("Digite o ID da tarefa que deseja marcar como concluída:");
+        Console.WriteLine("Digite o número da tarefa que deseja marcar como concluída:");
 
-        int id = int.Parse(Console.ReadLine());
+        int numero = int.Parse(Console.ReadLine());
 
-        var tarefaConcluida = tarefas.FirstOrDefault(t => t.Id == id);
+        var tarefaConcluida = tarefas.FirstOrDefault(t => t.NumeroTarefa == numero);
 
         if (tarefaConcluida != null)
         {
@@ -108,6 +113,19 @@ class Program
         else
         {
             Console.WriteLine("Tarefa não encontrada.");
+        }
+    }
+    static void DeletarTarefa(List<Tarefa> tarefas)
+    {
+        Console.WriteLine("Digite o número da tarefa a ser removida");
+        int numeroTarefa = int.Parse(Console.ReadLine());
+
+        var tarefaRemovida = tarefas.FirstOrDefault(t => t.NumeroTarefa == numeroTarefa);
+
+        if (tarefaRemovida != null)
+        {
+            tarefas.Remove(tarefaRemovida);
+            Console.WriteLine("Tarefa removida com sucesso!");
         }
     }
 }
