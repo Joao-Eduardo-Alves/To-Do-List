@@ -1,6 +1,6 @@
 ﻿public class Tarefa
 {
-    public int NumeroTarefa { get; set; }
+    public int Id { get; set; }
     public string Descricao { get; set; }
     public bool Concluida { get; private set; }
     public void MarcarConcluida()
@@ -23,14 +23,17 @@ class Program
 
         while (rodando)
         {
+            Console.WriteLine("==================================");
             Console.WriteLine("1 - cadastrar tarefa:");
             Console.WriteLine("2 - listar tarefas:");
             Console.WriteLine("3 - marcar tarefa como concluída:");
             Console.WriteLine("4 - Remover tarefa:");
             Console.WriteLine("5 - sair:");
+            Console.WriteLine("");
             Console.WriteLine("Digite a opção desejada:");
 
             string opcao = Console.ReadLine();
+            Console.WriteLine("");
 
             switch (opcao)
             {
@@ -60,15 +63,17 @@ class Program
             }
         }
     }
+    static int proximoID = 1;
     static void CadastrarTarefa(List<Tarefa> tarefas)
     {
         Console.WriteLine("Digite a descrição da tarefa:");
         Console.WriteLine("");
         string descricao = Console.ReadLine();
+        Console.WriteLine("");
 
         Tarefa novaTarefa = new Tarefa
         {
-            NumeroTarefa = tarefas.Count + 1,
+            Id = proximoID++,
             Descricao = descricao
         };
 
@@ -81,55 +86,78 @@ class Program
     {
         Console.WriteLine("");
         Console.WriteLine("Tarefas cadastradas:");
-        Console.WriteLine("");
+
+        int numeroExibicao = 1;
 
         if (tarefas.Count == 0)
         {
-            Console.WriteLine("Nenhuma tarefa cadastrada.");
+            Console.WriteLine("Não há tarefas cadastradas.");
             return;
         }
         foreach (var tarefa in tarefas)
         {
             string status = tarefa.Concluida ? "CONCLUÍDA" : "NÃO CONCLUÍDA";
-            Console.WriteLine($"{tarefa.NumeroTarefa}, Tarefa: {tarefa.Descricao} - {status}");
+
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine($"{numeroExibicao++} - Tarefa: {tarefa.Descricao} - {status}");
             Console.WriteLine("");
+            Console.WriteLine("-------------------------------------");
         }
     }
     static void MarcarListaConcluida(List<Tarefa> tarefas)
     {
-        Console.WriteLine("Digite o número da tarefa que deseja marcar como concluída:");
-
-        int numero = int.Parse(Console.ReadLine());
-
-        var tarefaConcluida = tarefas.FirstOrDefault(t => t.NumeroTarefa == numero);
-
-        if (tarefaConcluida != null)
+        if (tarefas.Count == 0)
         {
-            tarefaConcluida.MarcarConcluida();
-
-            Console.WriteLine("Tarefa marcada como concluída!");
-            Console.WriteLine("");
+            Console.WriteLine("Não há tarefas cadastradas!");
+            return;
         }
-        else
+
+        Console.WriteLine("Digite o número da tarefa que deseja concluir:");
+
+        if (int.TryParse(Console.ReadLine(), out int numeroConcluir))
         {
-            Console.WriteLine("Tarefa não encontrada.");
+            if (numeroConcluir >= 1 && numeroConcluir <= tarefas.Count)
+            {
+                tarefas[numeroConcluir - 1].MarcarConcluida();
+                Console.WriteLine("Tarefa concluída com sucesso!");
+
+                ListarTarefas(tarefas);
+            }
+            else
+            {
+                Console.WriteLine("Tarefa inválida");
+                Console.WriteLine("");
+            }
         }
     }
     static void DeletarTarefa(List<Tarefa> tarefas)
     {
-        Console.WriteLine("Digite o número da tarefa a ser removida");
-        int numeroTarefa = int.Parse(Console.ReadLine());
-
-        var tarefaRemovida = tarefas.FirstOrDefault(t => t.NumeroTarefa == numeroTarefa);
-
-        if (tarefaRemovida != null)
+        if (tarefas.Count == 0)
         {
-            tarefas.Remove(tarefaRemovida);
-            Console.WriteLine("Tarefa removida com sucesso!");
+            Console.WriteLine("Não há tarefas cadastradas!");
+            return;
+        }
+
+        Console.WriteLine("Digite o número da tarefa a ser removida:");
+
+        if (int.TryParse(Console.ReadLine(), out int numeroExibicao))
+            Console.WriteLine("");
+        {
+            if (numeroExibicao >= 1 && numeroExibicao <= tarefas.Count)
+            {
+                tarefas.RemoveAt(numeroExibicao - 1);
+                Console.WriteLine("Tarefa removida!");
+            }
+            else
+            {
+                Console.WriteLine($"Número inválido! Digite um valor entre 1 e {tarefas.Count}");
+                Console.WriteLine("");
+            }
         }
     }
 }
 
 
-
-//Funcionalidade futura: Salvar as tarefas em um arquivo de texto para que elas persistam entre execuções do programa.
+//Funcionalidades futura:
+//Salvar as tarefas em um arquivo de texto para que elas persistam entre execuções do programa
+//Adicionar interface desktop (WPF).
