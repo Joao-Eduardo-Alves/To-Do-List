@@ -141,8 +141,9 @@ class Program
         Console.WriteLine("Digite o número da tarefa a ser removida:");
 
         if (int.TryParse(Console.ReadLine(), out int numeroExibicao))
-            Console.WriteLine("");
         {
+            Console.WriteLine("");
+
             if (numeroExibicao >= 1 && numeroExibicao <= tarefas.Count)
             {
                 tarefas.RemoveAt(numeroExibicao - 1);
@@ -154,8 +155,13 @@ class Program
                 Console.WriteLine("");
             }
         }
+        else
+        {
+            Console.WriteLine("Entrada Inválida! Digite apenas números");
+        }
     }
 }
+
 
 
 //Funcionalidades futura:
