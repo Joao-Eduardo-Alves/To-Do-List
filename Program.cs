@@ -163,7 +163,6 @@ class Program
 }
 
 
-
 //Funcionalidades futura:
 //Salvar as tarefas em um arquivo de texto para que elas persistam entre execuções do programa
-//Adicionar interface desktop (WPF).
+//Adicionar interface Web (React)
