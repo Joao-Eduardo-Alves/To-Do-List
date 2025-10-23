@@ -1,20 +1,41 @@
-# Pastas do Visual Studio
+# === BACKEND (.NET / C#) ===
 .vs/
 bin/
 obj/
-
-# Configurações do usuário e arquivos temporários
 *.user
 *.suo
 *.tmp
 *.log
 *.ide
-
-# Pacotes do NuGet
 *.nupkg
 packages/
-
-# Outros arquivos gerados
 *.resharper
 *.dotCover
 *.sln.docstates
+
+# === FRONTEND (React / Node) ===
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.env
+frontend/.vite
+frontend/.parcel-cache/
+frontend/.next/
+frontend/out/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+# === AMBOS ===
+logs/
+*.log
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# === Arquivos de build e cache ===
+*.local
+*.sw?
