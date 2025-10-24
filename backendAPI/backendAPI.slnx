@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../backend/To-Do.csproj" />
+  <Project Path="backendAPI.csproj" />
+</Solution>
