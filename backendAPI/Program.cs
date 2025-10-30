@@ -13,7 +13,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var tarefas = new List<Tarefa>();
 
@@ -23,6 +23,11 @@ app.MapGet("/listarTarefas", () => tarefas);
 
 app.MapPost("/adicionarTarefa", (Tarefa novaTarefa) =>
 {
+    if (string.IsNullOrWhiteSpace(novaTarefa.Descricao))
+    {
+        return Results.BadRequest("A descrição da tarefa não pode ser nula.");
+    }
+
     novaTarefa.Id = proximoId++;
     novaTarefa.Concluida = false;
     tarefas.Add(novaTarefa);
@@ -34,12 +39,11 @@ app.MapDelete("/removerTarefa/{id}", (int id) =>
     var tarefaARemover = tarefas.FirstOrDefault(t => t.Id == id);
     if (tarefaARemover == null)
         return Results.NotFound($"Tarefa '{id}' não encontrada");
+
     tarefas.Remove(tarefaARemover);
     return Results.Ok($"Tarefa '{id}' removida com sucesso.");
 });
 
-
-//endpoint concluir
 app.MapPut("/concluirTarefa/{id}", (int id) =>
 {
     var tarefaAConcluir = tarefas.FirstOrDefault(t => t.Id == id);
@@ -49,8 +53,6 @@ app.MapPut("/concluirTarefa/{id}", (int id) =>
     tarefaAConcluir.Concluida = true;
     return Results.Ok($"Tarefa '{id}' concluída com sucesso.");
 });
-
-
 
 app.Run();
 

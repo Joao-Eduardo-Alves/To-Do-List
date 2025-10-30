@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-function CadastrarTarefa({ adicionar }) {
+function CadastrarTarefa({ adicionarTarefa }) {
 
     const [descricao, setText] = useState("");
 
     const handleAdd = () => {
-        adicionar(descricao);  // Envia para o App.jsx  
+        adicionarTarefa(descricao);
         setText("");
     };
 
