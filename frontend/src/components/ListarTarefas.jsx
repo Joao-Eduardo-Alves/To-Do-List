@@ -1,6 +1,8 @@
 import { Trash2 } from "lucide-react";
 import { CircleCheck } from "lucide-react";
-function ListarTarefas({ tarefas, deletarTarefa,concluirTarefa }) {
+import { useState } from "react";
+function ListarTarefas({ tarefas, deletarTarefa, concluirTarefa, editarTarefa }) {
+    const [editandoId, setEditandoId] = useState(null);
 
     return (
         <ul className="space-y-2">
@@ -13,9 +15,28 @@ function ListarTarefas({ tarefas, deletarTarefa,concluirTarefa }) {
                     >
                         <CircleCheck size={22} color="white"/>
                     </button> 
-                
-                    <span className={`flex-1 ${tarefa.concluida ? 'line-through text-gray-400' : 'text-white'}`}>{tarefa.descricao}</span>
-                    
+
+                    {editandoId === tarefa.id ? (
+                        <input
+                            type="text"
+                            defaultValue={tarefa.descricao}
+                            onBlur={(e) => {
+                                editarTarefa(tarefa.id, e.target.value);
+                                setEditandoId(null);
+                            }}
+                            className="bg-gray-700 text-white p-2 rounded w-full"
+                            autoFocus
+                        />
+                    ) : (
+                        <span
+                            onClick={() => setEditandoId(tarefa.id)}
+                            className={`flex-1 cursor-pointer hover:underline ${tarefa.concluida ? "line-through text-gray-400" : "text-white"
+                                }`}
+                        >
+                            {tarefa.descricao}
+                        </span>
+                    )}
+
                     <button
                         onClick={() => deletarTarefa(tarefa.id)}
                         className="flex items-center bg-red-400 hover:bg-red-500 p-1 rounded-sm transition">

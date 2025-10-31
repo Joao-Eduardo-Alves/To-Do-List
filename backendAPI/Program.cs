@@ -44,6 +44,20 @@ app.MapDelete("/removerTarefa/{id}", (int id) =>
     return Results.Ok($"Tarefa '{id}' removida com sucesso.");
 });
 
+app.MapPut("/editarTarefa/{id}", (int id, Tarefa tarefaEditada) =>
+{
+    var tarefaAEditar = tarefas.FirstOrDefault(t => t.Id == id);
+    if (tarefaAEditar == null)
+        return Results.NotFound($"Tarefa não encontrada");
+
+    if (string.IsNullOrWhiteSpace(tarefaEditada.Descricao))
+    {
+        return Results.BadRequest("A descrição da tarefa não pode ser nula.");
+    }
+    tarefaAEditar.Descricao = tarefaEditada.Descricao;
+    return Results.Ok($"Tarefa editada com sucesso.");
+});
+
 app.MapPut("/concluirTarefa/{id}", (int id) =>
 {
     var tarefaAConcluir = tarefas.FirstOrDefault(t => t.Id == id);

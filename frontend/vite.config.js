@@ -12,7 +12,8 @@ export default defineConfig({
             '/adicionarTarefa': 'http://localhost:5175',
             '/listarTarefas': 'http://localhost:5175',
             '/removerTarefa': 'http://localhost:5175',
-            '/concluirTarefa/': 'http://localhost:5175'
+            '/concluirTarefa/': 'http://localhost:5175',
+            '/editarTarefa/': 'http://localhost:5175'
         }
     }
 });

@@ -48,6 +48,33 @@ function App() {
         }
     };
 
+    const editarTarefa = async (id, novaDescricao) => {
+        try {
+            const res = await fetch(`/editarTarefa/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ descricao: novaDescricao })
+            });
+
+            const mensagem = await res.text();
+
+            alert(mensagem);
+
+            if (!res.ok) {
+                return;
+            }
+
+            setTarefas(prev =>
+                prev.map(tarefa =>
+                    tarefa.id === id ? { ...tarefa, descricao: novaDescricao } : tarefa
+                )
+            );
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const concluirTarefa = async (id) => {
 
         const res = await fetch(`/concluirTarefa/${id}`, {
@@ -67,16 +94,16 @@ function App() {
         alert(mensagem);
     };
 
-        useEffect(() => {
-            listarTarefas();
-        }, []);
+    useEffect(() => {
+        listarTarefas();
+    }, []);
 
-        return (
-            <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
-                <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
-                <ListarTarefas tarefas={tarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} />
-            </div>
-        );
+    return (
+        <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
+            <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
+            <ListarTarefas tarefas={tarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} editarTarefa={editarTarefa} />
+        </div>
+    );
 }
 
 export default App
