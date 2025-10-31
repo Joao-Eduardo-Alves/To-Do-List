@@ -48,10 +48,10 @@ app.MapPut("/concluirTarefa/{id}", (int id) =>
 {
     var tarefaAConcluir = tarefas.FirstOrDefault(t => t.Id == id);
     if (tarefaAConcluir == null)
-        return Results.NotFound($"Tarefa '{id}' não encontrada");
+        return Results.NotFound($"Tarefa não encontrada");
 
     tarefaAConcluir.Concluida = true;
-    return Results.Ok($"Tarefa '{id}' concluída com sucesso.");
+    return Results.Ok($"Tarefa concluída com sucesso.");
 });
 
 app.Run();

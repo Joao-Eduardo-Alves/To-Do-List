@@ -54,13 +54,16 @@ function App() {
             method: 'PUT',
         });
 
+        const mensagem = await res.text();
+
         if (!res.ok) {
-            const erro = await res.text();
-            alert(`Erro ao concluir tarefa ${id}: ${erro}`);
+            alert(mensagem);
             return;
         }
+        setTarefas(tarefas.map(t =>
+            t.id === id ? { ...t, concluida: true } : t
+        ));
 
-        const mensagem = await res.text();
         alert(mensagem);
     };
 
@@ -69,7 +72,7 @@ function App() {
         }, []);
 
         return (
-            <div className="flex flex-col gap-15 items-center justify-start h-screen bg-gradient-to-t from-blue-300 to-blue-900">
+            <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
                 <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
                 <ListarTarefas tarefas={tarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} />
             </div>
