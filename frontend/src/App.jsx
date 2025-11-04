@@ -101,7 +101,7 @@ function App() {
     return (
         <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
             <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
-            <ListarTarefas tarefas={tarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} editarTarefa={editarTarefa} />
+            <ListarTarefas tarefas={tarefas} setTarefas={setTarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} editarTarefa={editarTarefa} />
         </div>
     );
 }

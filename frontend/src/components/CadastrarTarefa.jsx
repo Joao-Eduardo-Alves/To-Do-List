@@ -15,10 +15,15 @@ function CadastrarTarefa({ adicionarTarefa }) {
             <div className="flex gap-4 justify-center">
                 <input
                     type="text"
+                    className="bg-gray-700 text-white p-3 rounded-xl focus:outline-none"
                     placeholder="Digite uma tarefa..."
                     onChange={(e) => setText(e.target.value)}
                     value={descricao}
-                    className="bg-gray-700 text-white p-3 rounded-xl  focus:outline-    none"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleAdd();
+                        }
+                    }}
                 />
                 <button
                     onClick={handleAdd}
