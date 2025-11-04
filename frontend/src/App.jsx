@@ -1,109 +1,111 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
-import CadastrarTarefa from './components/CadastrarTarefa.jsx'
-import ListarTarefas from './components/ListarTarefas';
+import { useEffect } from "react";
+import { useState } from "react";
+import CadastrarTarefa from "./components/CadastrarTarefa.jsx";
+import ListarTarefas from "./components/ListarTarefas";
 function App() {
+  const [tarefas, setTarefas] = useState([]);
 
-    const [tarefas, setTarefas] = useState([]);
+  const listarTarefas = async () => {
+    const res = await fetch("/listarTarefas");
+    const data = await res.json();
+    setTarefas(data);
+  };
 
-    const listarTarefas = async () => {
-        const res = await fetch('/listarTarefas');
-        const data = await res.json();
-        setTarefas(data);
-    };
+  const adicionarTarefa = async (descricao) => {
+    const res = await fetch("/adicionarTarefa", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ descricao }),
+    });
 
-    const adicionarTarefa = async (descricao) => {
+    if (!res.ok) {
+      const erro = await res.text();
+      alert("Erro ao adicionar tarefa." + erro);
+      return;
+    }
+    const tarefa = await res.json();
+    setTarefas([...tarefas, tarefa]);
+  };
 
-        const res = await fetch('/adicionarTarefa', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ descricao })
-        });
+  const deletarTarefa = async (id) => {
+    try {
+      const res = await fetch(`/removerTarefa/${id}`, {
+        method: "DELETE",
+      });
 
-        if (!res.ok) {
-            const erro = await res.text();
-            alert("Erro ao adicionar tarefa." + erro);
-            return;
-        }
-        const tarefa = await res.json();
-        setTarefas([...tarefas, tarefa]);
-    };
+      if (res.ok) {
+        setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
+        console.log("Tarefa deletada com sucesso");
+      } else {
+        console.log("Tarefa nï¿½o encontrada");
+      }
+    } catch (erro) {
+      console.error("Erro na requisiï¿½ï¿½o:", erro);
+    }
+  };
 
-    const deletarTarefa = async (id) => {
-        try {
-            const res = await fetch(`/removerTarefa/${id}`, {
-                method: 'DELETE',
-            });
+  const editarTarefa = async (id, novaDescricao) => {
+    try {
+      const res = await fetch(`/editarTarefa/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ descricao: novaDescricao }),
+      });
 
-            if (res.ok) {
-                setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
-                console.log("Tarefa deletada com sucesso");
-            }
-            else {
-                console.log("Tarefa não encontrada");
-            }
+      const mensagem = await res.text();
 
-        } catch (erro) {
-            console.error("Erro na requisição:", erro);
-        }
-    };
+      alert(mensagem);
 
-    const editarTarefa = async (id, novaDescricao) => {
-        try {
-            const res = await fetch(`/editarTarefa/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ descricao: novaDescricao })
-            });
+      if (!res.ok) {
+        return;
+      }
 
-            const mensagem = await res.text();
+      setTarefas((prev) =>
+        prev.map((tarefa) =>
+          tarefa.id === id ? { ...tarefa, descricao: novaDescricao } : tarefa
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-            alert(mensagem);
+  const concluirTarefa = async (id) => {
+    const res = await fetch(`/concluirTarefa/${id}`, {
+      method: "PUT",
+    });
 
-            if (!res.ok) {
-                return;
-            }
+    if (!res.ok) {
+      const mensagemErro = await res.text();
+      alert(mensagemErro);
+      return;
+    }
 
-            setTarefas(prev =>
-                prev.map(tarefa =>
-                    tarefa.id === id ? { ...tarefa, descricao: novaDescricao } : tarefa
-                )
-            );
+    const tarefaAtualizada = await res.json();
 
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const concluirTarefa = async (id) => {
-
-        const res = await fetch(`/concluirTarefa/${id}`, {
-            method: 'PUT',
-        });
-
-        const mensagem = await res.text();
-
-        if (!res.ok) {
-            alert(mensagem);
-            return;
-        }
-        setTarefas(tarefas.map(t =>
-            t.id === id ? { ...t, concluida: true } : t
-        ));
-
-        alert(mensagem);
-    };
-
-    useEffect(() => {
-        listarTarefas();
-    }, []);
-
-    return (
-        <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
-            <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
-            <ListarTarefas tarefas={tarefas} setTarefas={setTarefas} deletarTarefa={deletarTarefa} concluirTarefa={concluirTarefa} editarTarefa={editarTarefa} />
-        </div>
+    setTarefas(
+      tarefas.map((t) =>
+        t.id === id ? { ...t, concluida: tarefaAtualizada.concluida } : t
+      )
     );
+  };
+
+  useEffect(() => {
+    listarTarefas();
+  }, []);
+
+  return (
+    <div className="min-h-screen overflow-y-auto bg-gradient-to-t from-blue-300 to-blue-900 flex flex-col items-center gap-12 py-8 px-4">
+      <CadastrarTarefa adicionarTarefa={adicionarTarefa} />
+      <ListarTarefas
+        tarefas={tarefas}
+        setTarefas={setTarefas}
+        deletarTarefa={deletarTarefa}
+        concluirTarefa={concluirTarefa}
+        editarTarefa={editarTarefa}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;

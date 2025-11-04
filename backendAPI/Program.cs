@@ -64,8 +64,8 @@ app.MapPut("/concluirTarefa/{id}", (int id) =>
     if (tarefaAConcluir == null)
         return Results.NotFound($"Tarefa não encontrada");
 
-    tarefaAConcluir.Concluida = true;
-    return Results.Ok($"Tarefa concluída com sucesso.");
+    tarefaAConcluir.Concluida = !tarefaAConcluir.Concluida;
+    return Results.Ok(tarefaAConcluir);
 });
 
 app.Run();
