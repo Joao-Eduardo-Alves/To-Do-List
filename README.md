@@ -10,8 +10,12 @@ O objetivo é aplicar conhecimentos de **desenvolvimento Full Stack**, adicionan
 
 ## Estrutura e funcionalidades atuais do projeto.
 
-- Criar, listar, concluir e excluir tarefas (versão de terminal (pasta "backend").  
-- Interface inicial em React e estilizada com TailwindCSS (pasta "frontend").  
-- Minimal API e endpoints. (pasta "backendAPI").
+- Criar, listar, concluir e excluir tarefas (versão de terminal (pasta "backend").
+
+- Interface em React e estilizada com TailwindCSS (pasta "frontend") integrado com o backend via minimal API e endpoints. (pasta "backendAPI"). Com funcionalidades de Criar, listar, editar, concluir, reverter conclusão e excluir tarefas.
+
+## Demonstração
+
+![GIF de demonstração](Imagens/demonstracao.gif)
 
 ---
