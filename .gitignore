@@ -12,6 +12,7 @@ packages/
 *.resharper
 *.dotCover
 *.sln.docstates
+backendAPI/tarefas.json
 
 # === FRONTEND (React / Node) ===
 frontend/node_modules/
