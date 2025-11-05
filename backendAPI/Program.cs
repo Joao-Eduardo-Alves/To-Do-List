@@ -19,7 +19,7 @@ var tarefas = new List<Tarefa>();
 
 var proximoId = 1;
 
-app.MapGet("/listarTarefas", () => tarefas);
+app.MapGet("/listarTarefas", () => tarefas.OrderBy(t => t.Ordem));
 
 app.MapPost("/adicionarTarefa", (Tarefa novaTarefa) =>
 {
@@ -66,6 +66,19 @@ app.MapPut("/concluirTarefa/{id}", (int id) =>
 
     tarefaAConcluir.Concluida = !tarefaAConcluir.Concluida;
     return Results.Ok(tarefaAConcluir);
+});
+
+app.MapPost("/atualizarOrdem", (List<Tarefa> tarefasReordenadas) =>
+{
+    foreach (var t in tarefasReordenadas)
+    {
+        var tarefa = tarefas.FirstOrDefault(x => x.Id == t.Id);
+        if (tarefa != null)
+        {
+            tarefa.Ordem = t.Ordem;
+        }
+    }
+    return Results.Ok("Ordem atualizada");
 });
 
 app.Run();

@@ -19,7 +19,18 @@ function ListarTarefas({
     const [reordenado] = itens.splice(result.source.index, 1);
     itens.splice(result.destination.index, 0, reordenado);
 
-    setTarefas(itens);
+    const itensComOrdem = itens.map((tarefa, index) => ({
+      ...tarefa,
+      ordem: index,
+    }));
+
+    setTarefas(itensComOrdem);
+
+    fetch("/atualizarOrdem", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(itensComOrdem),
+    });
   };
 
   return (
