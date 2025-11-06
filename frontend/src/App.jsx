@@ -1,8 +1,23 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CadastrarTarefa from "./components/CadastrarTarefa.jsx";
 import ListarTarefas from "./components/ListarTarefas";
+
 function App() {
+  const erro = (msg) =>
+    toast.error(msg, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
   const [tarefas, setTarefas] = useState([]);
 
   const listarTarefas = async () => {
@@ -19,8 +34,8 @@ function App() {
     });
 
     if (!res.ok) {
-      const erro = await res.text();
-      alert("Erro ao adicionar tarefa." + erro);
+      const mensagemErro = await res.text();
+      erro("Erro ao adicionar tarefa." + mensagemErro);
       return;
     }
     const tarefa = await res.json();
@@ -104,6 +119,7 @@ function App() {
         concluirTarefa={concluirTarefa}
         editarTarefa={editarTarefa}
       />
+      <ToastContainer />
     </div>
   );
 }
