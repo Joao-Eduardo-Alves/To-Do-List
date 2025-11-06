@@ -6,8 +6,8 @@ import CadastrarTarefa from "./components/CadastrarTarefa.jsx";
 import ListarTarefas from "./components/ListarTarefas";
 
 function App() {
-  const erro = (msg) =>
-    toast.error(msg, {
+  const aviso = (msg) =>
+    toast.warn(msg, {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -34,8 +34,8 @@ function App() {
     });
 
     if (!res.ok) {
-      const mensagemErro = await res.text();
-      erro("Erro ao adicionar tarefa." + mensagemErro);
+      const mensagem = await res.text();
+      aviso(mensagem);
       return;
     }
     const tarefa = await res.json();
@@ -43,58 +43,39 @@ function App() {
   };
 
   const deletarTarefa = async (id) => {
-    try {
-      const res = await fetch(`/removerTarefa/${id}`, {
-        method: "DELETE",
-      });
+    const res = await fetch(`/removerTarefa/${id}`, {
+      method: "DELETE",
+    });
 
-      if (res.ok) {
-        setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
-        console.log("Tarefa deletada com sucesso");
-      } else {
-        console.log("Tarefa n�o encontrada");
-      }
-    } catch (erro) {
-      console.error("Erro na requisi��o:", erro);
+    if (res.ok) {
+      setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
     }
   };
 
   const editarTarefa = async (id, novaDescricao) => {
-    try {
-      const res = await fetch(`/editarTarefa/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descricao: novaDescricao }),
-      });
+    const res = await fetch(`/editarTarefa/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ descricao: novaDescricao }),
+    });
 
+    if (!res.ok) {
       const mensagem = await res.text();
-
-      alert(mensagem);
-
-      if (!res.ok) {
-        return;
-      }
-
-      setTarefas((prev) =>
-        prev.map((tarefa) =>
-          tarefa.id === id ? { ...tarefa, descricao: novaDescricao } : tarefa
-        )
-      );
-    } catch (error) {
-      console.error(error);
+      aviso(mensagem);
+      return;
     }
+
+    setTarefas((prev) =>
+      prev.map((tarefa) =>
+        tarefa.id === id ? { ...tarefa, descricao: novaDescricao } : tarefa
+      )
+    );
   };
 
   const concluirTarefa = async (id) => {
     const res = await fetch(`/concluirTarefa/${id}`, {
       method: "PUT",
     });
-
-    if (!res.ok) {
-      const mensagemErro = await res.text();
-      alert(mensagemErro);
-      return;
-    }
 
     const tarefaAtualizada = await res.json();
 
