@@ -11,7 +11,6 @@ function CadastrarTarefa({ adicionarTarefa }) {
     }
     adicionarTarefa(descricao);
     setDescricao("");
-    setMostrarAviso(false);
   };
 
   return (
@@ -24,7 +23,10 @@ function CadastrarTarefa({ adicionarTarefa }) {
           type="text"
           className="bg-gray-700 text-white p-3 rounded-xl focus:outline-none"
           placeholder="Digite uma tarefa..."
-          onChange={(e) => setDescricao(e.target.value)}
+          onChange={(e) => {
+            setDescricao(e.target.value);
+            setMostrarAviso(false);
+          }}
           value={descricao}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -34,7 +36,6 @@ function CadastrarTarefa({ adicionarTarefa }) {
         />
         <button
           onClick={handleAdd}
-          disabled={!descricao.trim()}
           className={`px-4 py-2 rounded-xl transition ${
             descricao.trim()
               ? "bg-blue-500 hover:bg-blue-600"
