@@ -2,10 +2,16 @@ import { useState } from "react";
 
 function CadastrarTarefa({ adicionarTarefa }) {
   const [descricao, setText] = useState("");
+  const [mostrarAviso, setMostrarAviso] = useState(false);
 
   const handleAdd = () => {
+    if (!descricao.trim()) {
+      setMostrarAviso(true);
+      return;
+    }
     adicionarTarefa(descricao);
     setText("");
+    setMostrarAviso(false);
   };
 
   return (
@@ -28,11 +34,21 @@ function CadastrarTarefa({ adicionarTarefa }) {
         />
         <button
           onClick={handleAdd}
-          className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-xl transition"
+          disabled={!descricao.trim()}
+          className={`px-4 py-2 rounded-xl transition ${
+            descricao.trim()
+              ? "bg-blue-500 hover:bg-blue-600"
+              : "bg-gray-500 cursor-not-allowed"
+          }`}
         >
           Adicionar
         </button>
       </div>
+      {mostrarAviso && (
+        <p className="text-red-500 text-center w-full font-bold drop-shadow-xl">
+          Descrição da tarefa não pode ser vazia
+        </p>
+      )}
     </div>
   );
 }
