@@ -42,7 +42,7 @@ app.MapPost("/adicionarTarefa", (Tarefa novaTarefa) =>
 {
     if (string.IsNullOrWhiteSpace(novaTarefa.Descricao))
     {
-        return Results.BadRequest("A descrição da tarefa não pode ser nula.");
+        return Results.BadRequest("A descrição da tarefa não pode ser vazia.");
     }
 
     novaTarefa.Id = proximoId++;
@@ -75,7 +75,7 @@ app.MapPut("/editarTarefa/{id}", (int id, Tarefa tarefaEditada) =>
 
     if (string.IsNullOrWhiteSpace(tarefaEditada.Descricao))
     {
-        return Results.BadRequest("A descrição da tarefa não pode ser nula.");
+        return Results.BadRequest("A descrição da tarefa não pode ser vazia.");
     }
     tarefaAEditar.Descricao = tarefaEditada.Descricao;
     SalvarTarefas(tarefas);
