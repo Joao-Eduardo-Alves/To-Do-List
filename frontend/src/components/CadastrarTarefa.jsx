@@ -14,7 +14,7 @@ function CadastrarTarefa({ adicionarTarefa }) {
   };
 
   return (
-    <div className="rounded-xl w-96 h-40 bg-[oklch(28.2%_0.091_267.935)] flex flex-col gap-10 py-2">
+    <div className="rounded-xl w-96 h-40 bg-blue-950 flex flex-col gap-10 py-2">
       <h1 className="text-white text-center font-bold text-4xl">
         Adicionar tarefa
       </h1>

@@ -53,7 +53,7 @@ function ListarTarefas({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="bg-[oklch(28.2%_0.091_267.935)] text-white p-4 rounded-xl flex items-center gap-6 cursor-move"
+                    className="bg-blue-950 text-white p-4 rounded-xl flex items-center gap-6 cursor-move"
                   >
                     <button
                       onClick={() => concluirTarefa(tarefa.id)}
