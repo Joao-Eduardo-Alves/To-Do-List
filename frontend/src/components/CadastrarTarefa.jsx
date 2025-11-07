@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function CadastrarTarefa({ adicionarTarefa }) {
-  const [descricao, setText] = useState("");
+  const [descricao, setDescricao] = useState("");
   const [mostrarAviso, setMostrarAviso] = useState(false);
 
   const handleAdd = () => {
@@ -10,7 +10,7 @@ function CadastrarTarefa({ adicionarTarefa }) {
       return;
     }
     adicionarTarefa(descricao);
-    setText("");
+    setDescricao("");
     setMostrarAviso(false);
   };
 
@@ -24,7 +24,7 @@ function CadastrarTarefa({ adicionarTarefa }) {
           type="text"
           className="bg-gray-700 text-white p-3 rounded-xl focus:outline-none"
           placeholder="Digite uma tarefa..."
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => setDescricao(e.target.value)}
           value={descricao}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
