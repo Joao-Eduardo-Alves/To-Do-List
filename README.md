@@ -1,21 +1,53 @@
 # 📝 To-Do List
 
-⚙️📒 Projeto pessoal sendo desenvolvido para aprimorar minhas habilidades em novas tecnologias.
+⚙️📒 Projeto pessoal desenvolvido para praticar e aprimorar habilidades em Full Stack.
+
+### Tecnologias Utilizadas
+
+- Frontend: React, TailwindCSS, Hello-Pangea (drag-and-drop)
+
+- Backend: C# (.NET 8), Minimal API
+
+- Persistência: Arquivo JSON (tarefas.json)
+
+- Controle de versão: Git + GitHub
 
 ## Sobre o Projeto
 
-Trata-se de uma **To-Do List** que começou como um projeto em **C# para terminal** e evoluiu para uma versão **web**, sendo construída com **React** e **TailwindCSS**.
+Trata-se de uma To-Do List que começou como um **projeto de terminal** em **C#** e evoluiu para uma aplicação web completa, com **frontend em React e Tailwind CSS**, **backend em C# via Minimal API** e **persistência de dados simples usando um arquivo JSON**.
 
-O objetivo é aplicar conhecimentos de **desenvolvimento Full Stack**, adicionando funcionalidades gradualmente, com **integração de backend via API** e **persistência de dados** em breve.
+## Funcionalidades
 
-## Estrutura e funcionalidades atuais do projeto.
+### Backend (C#)
 
-- Criar, listar, concluir e excluir tarefas (versão de terminal (pasta "backend").
+- Minimal API com endpoints REST: listar, adicionar, remover, editar, concluir, atualizarOrdem.
 
-- Interface em React e estilizada com TailwindCSS (pasta "frontend") integrado com o backend via minimal API e endpoints. (pasta "backendAPI"). Com funcionalidades de Criar, listar, editar, concluir, reverter conclusão e excluir tarefas.
+- Persistência de dados em JSON (tarefas.json);
+
+### Frontend (React + TailwindCSS)
+
+- Interface moderna, responsiva e estilizada com TailwindCSS;
+
+- Drag-and-drop das tarefas utilizando Hello-Pangea;
+
+- Feedback visual e alertas via toast para ações do usuário;
+
+- Sincronização automática com o backend via fetch API;
+
+- Ordenação das tarefas mantidas.
+
+### Versão de terminal
+
+- Criar, listar, concluir e excluir tarefas;
+  
+- Espaçamentos e divisões com "=" para melhor legibilidade.
 
 ## Demonstração
 
 ![GIF de demonstração](Imagens/demonstracao.gif)
+
+## Demonstração versão inicial do projeto (terminal)
+
+![GIF de demonstração terminal](Imagens/demonstracaoTerminal.gif)
 
 ---
